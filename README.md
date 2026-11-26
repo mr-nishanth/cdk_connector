@@ -101,6 +101,24 @@ Actual commands must be verified from the repository configuration.
 - Use approved secure credential handling.
 - Preserve existing authentication and authorization controls.
 
+## Order Tracking Client (KAN-9)
+
+`order_tracking.get_tracking(base_url, order_id, *, client=None, timeout=10.0)`
+calls the backend endpoint `GET /api/v1/orders/{order_id}/tracking` and returns an
+`OrderTracking` dataclass (`order_id`, `status`, `updated_at`).
+
+Upstream contract (autosoft-connector, sha256 314bf81684b6):
+
+- 200: `{"order_id": str, "status": "pending" | "shipped" | "delivered", "updated_at": ISO 8601 str}`
+- 404: `{"detail": str}` is raised as `OrderNotFound`
+- Other non-2xx responses raise `httpx.HTTPStatusError`
+
+Run the offline tests from the repository root:
+
+```
+python -m pytest -q
+```
+
 ## Documentation Maintenance
 
 Update this README when the CDK extraction architecture, supported workflows, dependencies or test procedures change.
