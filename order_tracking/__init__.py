@@ -8,10 +8,13 @@ from order_tracking.client import (
     get_tracking,
 )
 
+VERSION = "0.1.0"
+
 __all__ = [
     "ALLOWED_STATUSES",
     "OrderNotFound",
     "OrderTracking",
     "Status",
+    "VERSION",
     "get_tracking",
 ]
