@@ -9,7 +9,12 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from order_tracking import OrderNotFound, OrderTracking, get_tracking  # noqa: E402
+from order_tracking import (  # noqa: E402
+    OrderNotFound,
+    OrderTracking,
+    get_tracking,
+    is_final_status,
+)
 
 BASE = "https://backend.example"
 OK_BODY = {
@@ -114,3 +119,21 @@ def test_unexpected_extra_field_is_rejected():
     client = _client(lambda req: httpx.Response(200, json=body))
     with pytest.raises(ValueError):
         get_tracking(BASE, "ORD-1001", client=client)
+
+
+def test_is_final_status_delivered_is_true():
+    assert is_final_status("delivered") is True
+
+
+def test_is_final_status_pending_is_false():
+    assert is_final_status("pending") is False
+
+
+def test_is_final_status_shipped_is_false():
+    assert is_final_status("shipped") is False
+
+
+@pytest.mark.parametrize("value", ["lost", "", "Delivered"])
+def test_is_final_status_unknown_value_raises_value_error(value):
+    with pytest.raises(ValueError):
+        is_final_status(value)
