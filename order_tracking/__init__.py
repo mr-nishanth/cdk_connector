@@ -6,6 +6,7 @@ from order_tracking.client import (
     OrderTracking,
     Status,
     get_tracking,
+    is_final_status,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "OrderTracking",
     "Status",
     "get_tracking",
+    "is_final_status",
 ]

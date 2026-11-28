@@ -57,6 +57,17 @@ def _parse(payload: Any) -> OrderTracking:
     return OrderTracking(order_id=order_id, status=status, updated_at=updated_at)
 
 
+def is_final_status(status: str) -> bool:
+    """Return True if ``status`` is a final (terminal) order status.
+
+    Only ``"delivered"`` is final. Raises ``ValueError`` for any value not in
+    ``ALLOWED_STATUSES``.
+    """
+    if status not in ALLOWED_STATUSES:
+        raise ValueError(f"unknown status value: {status!r}")
+    return status == "delivered"
+
+
 def get_tracking(
     base_url: str,
     order_id: str,
