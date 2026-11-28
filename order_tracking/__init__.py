@@ -8,8 +8,11 @@ from order_tracking.client import (
     get_tracking,
 )
 
+CONNECTOR_NAME = "cdk"
+
 __all__ = [
     "ALLOWED_STATUSES",
+    "CONNECTOR_NAME",
     "OrderNotFound",
     "OrderTracking",
     "Status",
